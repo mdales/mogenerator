@@ -37,9 +37,7 @@
 	return keyPaths;
 }
 
-+ (NSArray*)filterByPredicate: (NSPredicate*)predicate
-					inContext: (NSManagedObjectContext*)moc_
-						error: (NSError**)error
++ (NSArray*)filterInContext: (NSManagedObjectContext*)moc_ error: (NSError**)error byPredicate: (NSPredicate*)predicate
 {	
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entityDesc = [NSEntityDescription entityForName: @"<$name$>"
@@ -53,6 +51,29 @@
 	[request release];	
 	return objects;
 }
+
++ (NSArray*)filterInContext: (NSManagedObjectContext*)moc_ error: (NSError**)error andPredicates: (id)firstPredicate, ...
+{
+    NSMutableArray *predicateArray = [[NSMutableArray alloc] init];    
+    id eachPredicate;
+    va_list argumentList;
+    if (firstPredicate)         
+    {                                 
+        [predicateArray addObject: firstPredicate];
+        va_start(argumentList, firstPredicate);          
+        while (eachPredicate = va_arg(argumentList, id)) 
+            [predicateArray addObject: eachPredicate];            
+        va_end(argumentList);
+    }
+    NSPredicate *filter = nil;
+    if (predicateArray.count > 0)
+        filter = [NSCompoundPredicate andPredicateWithSubpredicates: predicateArray];
+    [predicateArray release];
+    
+    return [_<$managedObjectClassName$> filterInContext: moc_ error: error byPredicate: filter];
+}
+
+
 
 <$foreach Attribute noninheritedAttributes do$>
 <$if Attribute.hasDefinedAttributeType$>

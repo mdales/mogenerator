@@ -37,6 +37,23 @@
 	return keyPaths;
 }
 
++ (NSArray*)filterByPredicate: (NSPredicate*)predicate
+					inContext: (NSManagedObjectContext*)moc_
+						error: (NSError**)error
+{	
+	NSFetchRequest *request = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entityDesc = [NSEntityDescription entityForName: @"<$name$>"
+												  inManagedObjectContext: moc_];
+	[request setEntity: entityDesc];
+	if (predicate)
+	    [request setPredicate: predicate];
+	*error = nil;
+	NSArray *objects = [moc_ executeFetchRequest: request 
+									        error: error];
+	[request release];	
+	return objects;
+}
+
 <$foreach Attribute noninheritedAttributes do$>
 <$if Attribute.hasDefinedAttributeType$>
 

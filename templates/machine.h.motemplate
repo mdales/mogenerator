@@ -18,6 +18,7 @@
 - (<$managedObjectClassName$>ID*)objectID;
 + (NSArray*)filterInContext: (NSManagedObjectContext*)moc_ error: (NSError**)error byPredicate: (NSPredicate*)predicate;
 + (NSArray*)filterInContext: (NSManagedObjectContext*)moc_ error: (NSError**)error andPredicates: (id)firstPredicate, ...;
++ (NSArray*)allInContext: (NSManagedObjectContext*)moc_ error: (NSError**)error;
 
 <$foreach Attribute noninheritedAttributes do$>
 <$if Attribute.hasDefinedAttributeType$>

@@ -73,7 +73,10 @@
     return [_<$managedObjectClassName$> filterInContext: moc_ error: error byPredicate: filter];
 }
 
-
++ (NSArray*)allInContext: (NSManagedObjectContext*)moc_ error: (NSError**)error
+{
+	return [_<$managedObjectClassName$> filterInContext: moc_ error: error byPredicate: nil];
+}
 
 <$foreach Attribute noninheritedAttributes do$>
 <$if Attribute.hasDefinedAttributeType$>

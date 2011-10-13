@@ -62,7 +62,7 @@
     {                                 
         [predicateArray addObject: firstPredicate];
         va_start(argumentList, firstPredicate);          
-        while (eachPredicate = va_arg(argumentList, id)) 
+        while ((eachPredicate = va_arg(argumentList, id)) != nil) 
             [predicateArray addObject: eachPredicate];            
         va_end(argumentList);
     }

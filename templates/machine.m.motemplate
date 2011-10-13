@@ -45,7 +45,8 @@
 	[request setEntity: entityDesc];
 	if (predicate)
 	    [request setPredicate: predicate];
-	*error = nil;
+	if (error != nil)
+	    *error = nil;
 	NSArray *objects = [moc_ executeFetchRequest: request 
 									        error: error];
 	[request release];	
